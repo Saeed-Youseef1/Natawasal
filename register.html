@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نتواصل | تسجيل</title>
+    <link rel="icon" href="assets/images/logo.png" sizes="64x64" type="image/png">
+    <link href="./dist/output.css" rel="stylesheet">
+    <link href="./css/style.css" rel="stylesheet">
+</head>
+
+<body dir="rtl">
+    <header class="header"></header>
+
+    <div id="alert-container" class="fixed bottom-4 right-4"></div>
+
+    <div id="loader" class="fixed inset-0 bg-white bg-opacity-70 flex items-center justify-center z-50 hidden">
+        <div class="w-10 h-10 border-4 border-t-4 border-gray-200 border-t-gray-600 rounded-full animate-spin"></div>
+    </div>
+
+    <form class="mt-6 " style="margin-top: 30px;">
+        <div class="flex flex-col items-center justify-center px-6 py-10 mx-auto lg:py-0">
+            <div class="w-full bg-white rounded-lg shadow border md:mt-0 sm:max-w-md xl:p-0 ">
+                <div class="py-6 flex justify-center">
+                    <img class="h-13 w-auto " src="./assets/images/logo.png" alt="Your Company">
+                </div>
+                <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                    <p class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
+                    إنشـــاء حســـاب
+                    </p>
+                    <div>
+                        <label class="block mb-2 text-sm font-medium text-gray-900">
+                            اسم :
+                        </label>
+                        <input placeholder="اسم"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
+                            id="name" type="text">
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-medium text-gray-900">
+                            اسم المستخدم:
+                        </label>
+                        <input placeholder="اسم المستخدم"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
+                            id="username" type="text">
+                    </div>
+                    <div>
+                        <label for="imageInput" class="block mb-2 text-sm font-medium text-gray-900">
+                            تحميل الصورة:
+                        </label>
+                        <div class="flex items-center">
+                            <input type="file" required  id="imageInput" accept="image/*" 
+                                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5 cursor-pointer">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-medium text-gray-900">
+                            كلمة السر:
+                        </label>
+                        <input
+                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
+                            placeholder="كلمة السر" id="password" type="password">
+                    </div>
+                    <button onclick="registerClick()" 
+                        class="w-full bg-blue-500 hover:bg-blue-700  font-medium rounded-lg text-sm px-5 py-2.5 text-center   text-white"
+                        type="button">
+                        تســـــــــجيـل 
+                    </button>
+                    <p class="text-sm"> هل لديك حساب؟
+                        <a href="login.html" class="text-blue-800">نعم </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script src="js/mainLogic.js"></script>
+    <script src="js/register.js"></script>
+
+</body>
+
+</html>

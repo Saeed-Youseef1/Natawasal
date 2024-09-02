@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نتواصل | الصفحة الرئيسية</title>
+    <link rel="icon" href="assets/images/logo.png" sizes="64x64" type="image/png">
+    <link href="./dist/output.css" rel="stylesheet">
+    <link href="./css/style.css" rel="stylesheet">
+</head>
+
+<body dir="rtl" style="overflow: hidden;">
+    <header class="header"></header>
+    
+    <div id="loader" class="fixed inset-0 bg-white bg-opacity-70 flex items-center justify-center z-50 hidden">
+        <div class="w-10 h-10 border-4 border-t-4 border-gray-200 border-t-gray-600 rounded-full animate-spin"></div>
+    </div>
+
+    <div id="alert-container" class="fixed bottom-4 right-4"></div>
+
+    <main class="mt-4  " id="main-content">
+        <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-2 shadow-md" id="homeContent"
+            style="overflow: auto; height: calc(100vh - 75px - 1.25rem); ">
+            <div class="flex flex-none items-center">
+                <!-- الزر لفتح المودال -->
+                <button data-modal-target="crud-modal" data-modal-toggle="crud-modal"
+                    class="block text-white font-medium rounded-lg text-sm text-center" type="button">
+                    <svg class="h-11 w-11 text-blue-500 hover:text-blue-700 cursor-pointer" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                        <circle cx="8.5" cy="8.5" r="1.5" />
+                        <polyline points="21 15 16 10 5 21" />
+                    </svg>
+                </button>
+                <div class="w-full">
+                    <input type="text" name="post" id="textInput" autocomplete="test post"
+                        class="text-xl w-full block rounded-lg flex-1 border-2 bg-transparent py-1.5 ps-2 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-blue-500 sm:text-sm sm:leading-6"
+                        placeholder="بما تفكر ؟">
+                </div>
+                <div class="w-fit" onclick="createNewPostClicked('text')">
+                    <svg class="h-9 w-9 ms-1 hover:text-blue-70 cursor-pointer text-blue-500 hover:text-blue-700 "
+                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" />
+                        <line x1="10" y1="14" x2="21" y2="3" />
+                        <path d="M21 3L14.5 21a.55 .55 0 0 1 -1 0L10 14L3 10.5a.55 .55 0 0 1 0 -1L21 3" />
+                    </svg>
+                </div>
+            </div>
+            <div class="posts mt-5 ">
+
+            </div>
+        </div>
+    </main>
+
+    <!-- popup-modal For add new post -->
+    <div id="crud-modal" tabindex="-1" aria-hidden="true"
+        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-4 w-full max-w-md max-h-full" style="z-index: 10000;">
+            <!-- محتوى المودال -->
+            <div class="relative bg-white rounded-lg shadow">
+                <!-- رأس المودال -->
+                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
+                    <h3 class="text-lg font-semibold text-gray-900">
+                        إنشاء منشور جديد
+                    </h3>
+                    <button type="button"
+                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
+                        data-modal-toggle="crud-modal">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                        </svg>
+                        <span class="sr-only">إغلاق المودال</span>
+                    </button>
+                </div>
+                <!-- جسم المودال -->
+                <form class="p-4 md:p-5">
+                    <div class="grid gap-4 mb-4 grid-cols-2">
+                        <div class="col-span-2">
+                            <label for="description" class="block mb-2 text-sm font-medium text-gray-900">وصف
+                                المنشور</label>
+                            <textarea id="body-post-image" rows="4"
+                                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                placeholder="أدخل وصف المنشور هنا" required></textarea>
+                        </div>
+                        <div class="col-span-2">
+                            <label for="post-image" class="block mb-2 text-sm font-medium text-gray-900">
+                                صورة المنشور
+                            </label>
+                            <input type="file" name="post-image" id="image-post-input"
+                                class="block w-full p-3 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
+                                accept="image/*" required>
+                        </div>
+                    </div>
+                    <button type="button" onclick="createNewPostClicked('image')"
+                        class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                        <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        إضافة
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- popup-modal For delete post -->
+    <div id="popup-modal" tabindex="-1"
+        class="hidden fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-opacity-50">
+        <div class="relative p-4 w-full max-w-md max-h-full">
+            <div class="relative bg-white rounded-lg shadow ">
+                <button type="button"
+                    class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                    data-modal-hide="popup-modal">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+                <div class="p-4 md:p-5 text-center">
+                    <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">هل متأكد في حذف المنشور؟</h3>
+                    <button data-modal-hide="popup-modal" type="button"
+                        class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                        نعم, متأكد
+                    </button>
+                    <button data-modal-hide="popup-modal" type="button" id="closeDeleteModel" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 bg-white border border-gray-200 
+                                hover:text-white focus:outline-none rounded-lg 
+                                focus:z-10 focus:ring-4 focus:ring-gray-100  dark:text-gray-400 
+                                dark:border-gray-600  hover:bg-gray-200">
+                        لا, أقفل
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Popup editModal -->
+    <div id="editModal" class="fixed inset-0 flex items-center justify-center z-50 hidden">
+    <!-- Backdrop -->
+    <div class="absolute inset-0 " onclick="toggleEditModal(false)"></div>
+
+    <!-- Modal Content -->
+    <div class="bg-white rounded-lg shadow-lg p-6 z-10 relative w-full max-w-md mx-auto">
+        <h2 class="text-xl font-bold mb-4">تعديل المنشور</h2>
+        <!-- محتوى النافذة المنبثقة هنا -->
+        <div>
+            <label for="postContent" class="block text-sm font-medium text-gray-700">محتوى المنشور:</label>
+            <textarea  rows="4" id="editBodyPost"
+                class="mt-1  p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"></textarea>
+        </div>
+        <div class="mt-2 hidden" id="imageEditPost">
+            <label for="imageInput" class="block mb-2 text-sm font-medium text-gray-900">
+                صورة المنشور : 
+            </label>
+            <div class="flex items-center ">
+                <input type="file" required id="imageInputPost" accept="image/*"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5 cursor-pointer">
+            </div>
+        </div>
+        <input hidden value="" id="typePostEdit" />
+        <input hidden value="" id="idPostEdit" />
+        <div class="flex justify-end mt-4">
+            <button onclick="toggleEditModal(false)"
+                class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-800">إلغاء</button>
+            <button onclick="saveChanges('home')" style="margin-right: 5px;"
+                class="bg-blue-500 text-white px-4 py-2 ml-2 rounded-md hover:bg-blue-600 mr-2">تعديل</button>
+        </div>
+    </div>
+</div>
+
+    <script src="js/mainLogic.js"></script>
+    <script src="js/home.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+.active {
+    color: #1d4ed8;
+    background-color: #dbeafe;
+}
+
+
+::placeholder {
+    font-size: 18px;
+}
+
+::-webkit-scrollbar {
+    width: 0;
+}
+
+
+.modal-open {
+    overflow: hidden;
+}
+
+.blur-background {
+    filter: blur(1px);
+}
+
+.comment-details {
+    position: relative !important;
+    max-width: 90%;
+}
+
+.sham {
+    content: "";
+    position: absolute;
+    right: -18px;
+    top: 5px;
+    border: 10px solid rgb(228, 230, 237);
+    border-color: transparent  transparent transparent rgb(228, 230, 237);
+    display: block;
+}
+
+
+#alert-container {
+    z-index: 10000000;
+}
