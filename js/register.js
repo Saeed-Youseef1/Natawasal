@@ -18,30 +18,24 @@ async function registerClick() {
     if (imageInput.files[0]) {
         formData.append('image', imageInput.files[0]);
     }
+
     try {
-    
         toggleLoader(true);
-        const response = await fetch(`https://tarmeezacademy.com/api/v1/register`, {
+        const response = await fetch('https://tarmeezacademy.com/api/v1/register', {
             method: 'POST',
-            body: formData
+            body: formData // لا حاجة لتعيين Content-Type عند استخدام FormData
         });
 
-        
-        
         // التحقق من استجابة السيرفر
         const contentType = response.headers.get('content-type');
 
         if (contentType && contentType.includes('application/json')) {
             const responseData = await response.json();
-            
-            if (!response.ok) {
-                if(response.status == 200) {
-                    showalert('خطأ!', 'هذا الحساب موجود بالفعل!', 'red');
-                }else {
-                handleServerError(responseData);
-                return;}
-            }
 
+            if (!response.ok) {
+                handleServerError(responseData);
+                return;
+            }
 
             if (responseData.token) {
                 sessionStorage.setItem('showRegisterAlert', 'true');
@@ -51,77 +45,54 @@ async function registerClick() {
             }
         } else {
             const errorText = await response.text();
-            throw  (response.status);
+            throw new Error(`Unexpected response: ${response.status} - ${errorText}`);
         }
 
     } catch (error) {
-        console.log(error)
-        if(error ===200) {
+        // عرض رسالة الخطأ المناسبة
+        if (error.message.includes('200')) {
             showalert('خطأ!', 'هذا الحساب موجود بالفعل!', 'red');
-            return;
-        }else
-            showalert('خطأ!',  'حاول مرة أخري!', 'red');
-        console.error(error.message);
+        } else {
+            showalert('خطأ!', 'حاول مرة أخرى!', 'red');
+        }
     } finally {
         toggleLoader(false);
     }
 }
 
 function handleServerError(errorData) {
-    if (errorData.message === 'The username has already been taken.') {
-        showalert('خطأ!', 'هذا الحساب موجود بالفعل!', 'red');
-    } else if (errorData.message === 'The password must be at least 6 characters.') {
-        showalert('خطأ!', 'يجب أن تكون كلمة السر علي الأقل 6 حروف!', 'red');
-    } else {
-        showalert('خطأ!', 'حاول مرة أخري!', 'red');
+    switch (errorData.message) {
+        case 'The username has already been taken.':
+            showalert('خطأ!', 'هذا الحساب موجود بالفعل!', 'red');
+            break;
+        case 'The password must be at least 6 characters.':
+            showalert('خطأ!', 'يجب أن تكون كلمة السر علي الأقل 6 حروف!', 'red');
+            break;
+        default:
+            showalert('خطأ!', 'حاول مرة أخرى!', 'red');
+            break;
     }
 }
 
-
-function checkEmpty(userName, password,name,imageInput) {
+function checkEmpty(userName, password, name, imageInput) {
     let isValid = true;
 
-    if (!userName) {
-        console.error('Username element is not found');
-        return false;
-    }
+    const fields = [userName, password, name, imageInput];
 
-    if (userName.value.trim() === "") {
-        userName.style.setProperty('background-color', '#ff000036', 'important');
+    fields.forEach(field => {
+        if (field && field.value.trim() === "") {
+            field.style.backgroundColor = '#ff000036';
+            isValid = false;
+        } else if (field) {
+            field.style.backgroundColor = '#f9fafa';
+        }
+    });
+
+    if (imageInput && (!imageInput.files || imageInput.files.length === 0)) {
+        imageInput.style.backgroundColor = '#ff000036';
         isValid = false;
-    } else {
-        userName.style.setProperty('background-color', '#f9fafa', 'important');
-    }
-
-    if (!password) {
-        console.error('Password element is not found');
-        return false;
-    }
-
-    if (password.value.trim() === "") {
-        password.style.setProperty('background-color', '#ff000036', 'important');
-        isValid = false;
-    } else {
-        password.style.setProperty('background-color', '#f9fafa', 'important');
-    }
-
-    if (!name) {
-        console.error('Name element is not found');
-        return false;
-    }
-
-    if (name.value.trim() === "") {
-        name.style.setProperty('background-color', '#ff000036', 'important');
-        isValid = false;
-    } else {
-        name.style.setProperty('background-color', '#f9fafa', 'important');
-    }
-
-    if (imageInput.value.trim() === "") {
-        imageInput.style.setProperty('background-color', '#ff000036', 'important');
-        isValid = false;
-    } else {
-        imageInput.style.setProperty('background-color', '#f9fafa', 'important');
+    } else if (imageInput) {
+        imageInput.style.backgroundColor = '#f9fafa';
     }
 
     return isValid;
